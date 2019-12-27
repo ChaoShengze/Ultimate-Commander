@@ -65,9 +65,23 @@ namespace Ultimate_Commander
             XmlElement hotKey = xml.CreateElement("Hotkey");
             settings.AppendChild(hotKey);
 
+            // 语言
+            XmlElement lang = xml.CreateElement("Language");
+            lang.InnerText = "CN";
+            settings.AppendChild(lang);
+
             xml.Save(configPath);
 
             xmlDocument = xml;
+        }
+
+        /// <summary>
+        /// 获取语言配置
+        /// </summary>
+        /// <returns>语言配置</returns>
+        public string GetLangConfig()
+        {
+            return xmlDocument.GetElementsByTagName("Language")[0].InnerText;
         }
     }
 }

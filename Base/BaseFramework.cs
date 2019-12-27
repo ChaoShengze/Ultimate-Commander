@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using Language;
+using Application = System.Windows.Forms.Application;
 
 namespace Ultimate_Commander
 {
@@ -38,7 +40,35 @@ namespace Ultimate_Commander
         [DllImport("user32.dll")]
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
+        /// <summary>
+        /// 回调委托类型
+        /// </summary>
         public delegate void CallBack();
+
+        /// <summary>
+        /// 语言配置实例化
+        /// </summary>
+        public ILanguage Language;
+
+        /// <summary>
+        /// 初始化语言配置，以支持多国语言
+        /// </summary>
+        /// <returns></returns>
+        public BaseFramework InitLanguage()
+        {
+            switch (Config.GetInstance().GetLangConfig())
+            {
+                case "CN":
+                default:
+                    Language = new Language_CN();
+                    break;
+                case "EN":
+                    Language = new Language_EN();
+                    break;
+            }
+
+            return this;
+        }
 
         /// <summary>
         /// 检查是否存在外置DLL文件的目录，无则创建
@@ -71,7 +101,7 @@ namespace Ultimate_Commander
             var fileName = Path.GetFileName(totalPath);
             if (fileName != "Ultimate Commander.exe")
             {
-                MessageBox.Show("请勿修改主程序文件名！");
+                MessageBox.Show(Language.DO_NOT_RENAME, Language.TITLE);
                 Process.GetCurrentProcess().Kill();
             }
             return this;
@@ -96,7 +126,7 @@ namespace Ultimate_Commander
                     callBack();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Log.GetInstance().WriteLog(e.Message);
             }
@@ -114,7 +144,7 @@ namespace Ultimate_Commander
             Process[] app = Process.GetProcessesByName("Ultimate Commander");
             if (app.Length > 1)
             {
-                MessageBox.Show("同时只允许一个进程运行！");
+                MessageBox.Show(Language.ONLY_ALLOW_ONE_PROCESS, Language.TITLE);
                 Process.GetCurrentProcess().Kill();
             }
             else

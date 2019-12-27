@@ -52,7 +52,6 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -68,6 +67,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Language\Language.csproj">
+      <Project>{fb68899a-52b4-4642-b738-925715f66ee2}</Project>
+      <Name>Language</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Log\Log.csproj">
       <Project>{77dcb498-2902-4e95-b735-5953f7d44352}</Project>
       <Name>Log</Name>

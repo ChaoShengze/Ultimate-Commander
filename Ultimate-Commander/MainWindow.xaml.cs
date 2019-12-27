@@ -37,6 +37,7 @@ namespace Ultimate_Commander
             // 系列检查
             BaseFramework
                 .GetInstance()
+                .InitLanguage()
                 .CheckDllDir()
                 .CheckSelfName()
                 .CheckSingleProcess()
